@@ -1,0 +1,140 @@
+// Q2D
+
+function replace_2(a, b, xs) {
+    return accumulate((x, ys) => x === a ? pair(b, ys) : pair(x, ys), null, xs);
+}
+
+// Q3A
+
+function insert_to_bottom(stack, new_elem) {
+    const tempStack = make_stack();
+    while (!is_empty(stack)) {
+        push(tempStack, pop(stack));
+    }
+    push(stack, new_elem);
+    while (!is_empty(tempStack)) {
+        push(stack, pop(tempStack));
+    }
+}
+
+// Q3B
+
+function reverse_stack(stack) {
+    if (is_empty(stack)) {}
+    else {
+        const hold = pop(stack);
+        reverse_stack(stack);
+        insert_to_bottom(stack, hold);
+    }
+}
+
+// Q4
+
+function closest_two_power(x) {
+    return math_pow(2, math_floor(math_log2(x)));
+}
+function min_tiles(L, W) {
+    if (L === 0 || W === 0) {
+        return 0;
+    } else if (L === 1 && W === 1) {
+        return 1;
+    } else {
+        const biggestL = math_min(closest_two_power(L), closest_two_power(W));
+        const rec1 = min_tiles(biggestL, W - biggestL);
+        const rec2 = min_tiles(L - biggestL, W);
+        return 1 + rec1 + rec2;
+    }
+}
+
+// Q5B
+
+function bubblesort_list(L) {
+    const len = length(L);
+    for (let i = len - 1; i >= 1; i = i - 1) {
+        let p = L;
+        for (let j = 0; j < i; j = j + 1) {
+            const a = p;
+            const b = tail(p);
+            if (head(a) > head(b)) {
+                const temp = head(a);
+                set_head(a, head(b));
+                set_head(b, temp);
+            } else {}
+            p = tail(p);
+        }
+    }
+}
+
+// Q5C1
+
+function reorder(A, T) {
+    const N = array_length(A);
+    const B = [];
+    for (let i = 0; i < N; i = i + 1) {
+        const ele = A[i];
+        const target = T[i];
+        B[target] = ele;
+    }
+    // copy B to A
+    for (let i = 0; i < N; i = i + 1) {
+        A[i] = B[i];
+    }
+}
+
+// Q5C2
+
+function swap(A, i, j) {
+    const temp = A[i];
+    A[i] = A[j];
+    A[j] = temp;
+}
+
+function reorder2(A, T) {
+    const N = array_length(A);
+    for (let i = 0; i < N; i = i + 1) {
+        const target = T[i];
+        if (target === i) {
+            continue;
+        } else {
+            swap(A, i, target);
+            swap(T, i, target);
+            i = i - 1;
+        }
+    }
+}
+
+// Q6C
+
+function free_grid(grid) {
+    for (let i = 0; i < 3; i = i + 1) {
+        for (let k = 0; k < 3; k = k + 1) {
+            grid[i][k] = '_';
+        }
+    }
+}
+
+// Q6D
+
+function replace_string(new_string, r, c, g, expected_string) {
+    if (g[r][c] === expected_string) {
+        g[r][c] = new_string;
+        return true;
+    } else {
+        return false;
+    }
+}
+
+// Q6E
+
+while (!replace_string(current_player, r, c, grid, '_')) {
+    prompt(grid_to_string, + "\n slot taken! Hit OK to try again");
+    r = parse...
+    c = parse...
+}
+
+if (check_winner(grid, current_player)) {
+    prompt(grid_to_string, + "\n" + current_player + " wins!");
+    current_player = "GAME_OVER";
+} else {
+    current_player = current_player === "X" ? "O" : "X";
+}
